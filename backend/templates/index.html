@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Aplicación offline para graficar ecuaciones matemáticas mediante reconocimiento de escritura y visualización en Plotly.">
+    <title>MathOff</title>
+
+    <!-- Ícono y estilos -->
+    <link rel="icon" href="{{ url_for('static', filename='img/icono.ico') }}">
+    <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <h1 class="logo">Graficador Matemático</h1>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">☰</button>
+            <nav id="nav-menu">
+                <a href="#inicio">Inicio</a>
+                <a href="#problematica">Problemática</a>
+                <a href="#objetivos">Objetivos</a>
+                <a href="#contacto">Contacto</a>
+                <div class="auth-buttons">
+                    <a href="#" class="btn-login" onclick="openModal('loginModal')">
+                        <i class='bx bxs-user'></i>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Modal Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Iniciar sesión</h2>
+            <form id="formLogin" class="modal-form">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <p class="switch-text">
+                ¿No tienes cuenta?
+                <a href="#" onclick="switchModal('loginModal', 'registerModal')">Regístrate aquí</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal Registro -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Registrarse</h2>
+            <form id="formRegistro" class="modal-form">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <button type="submit">Crear cuenta</button>
+            </form>
+            <p class="switch-text">
+                ¿Ya tienes una cuenta?
+                <a href="#" onclick="switchModal('registerModal', 'loginModal')">Inicia Sesión</a>
+            </p>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Inicio -->
+        <section id="inicio" class="section animate">
+            <h2>Aplicación Offline para Graficar Ecuaciones Matemáticas</h2>
+            <p>
+                Proyecto de investigación que busca facilitar la comprensión y el análisis de ecuaciones matemáticas,
+                mediante una herramienta capaz de reconocer escritura a mano a través de una cámara y mostrar su
+                respectiva gráfica.
+            </p>
+            <div class="white-button">
+                <a href="https://drive.google.com/file/d/1UJs7HuYmXM97iqHoLZbVgU80ufr_H-j7/view?usp=drive_link"
+                    target="_blank">Poster</a>
+                <a href="https://drive.google.com/file/d/1eYSP2le5ELkptDCTpmT4J6nezVuSSZ8Y/view?usp=drive_link"
+                    target="_blank">Leer más</a>
+                <div class="image-row">
+                    <img src="{{ url_for('static', filename='img/ventana inicial.png') }}" alt="Ventana inicial"
+                        class="responsive-img">
+                    <img src="{{ url_for('static', filename='img/Ventana de graficos.png') }}" alt="Ventana de gráficos"
+                        class="responsive-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- Problemática -->
+        <section id="problematica" class="section alt animate">
+            <h2>Problemática</h2>
+            <p>
+                En campos como matemáticas, física e ingeniería, comprender el comportamiento de las funciones es
+                crucial. Sin embargo, la interpretación de ecuaciones complejas puede ser un desafío. La visualización
+                de datos ofrece una solución, transformando números en representaciones visuales más comprensibles. Para
+                facilitar este proceso, proponemos el desarrollo de una herramienta tecnológica interactiva que permita
+                graficar funciones a partir de ecuaciones escritas a mano, utilizando Python. Esta herramienta busca
+                simplificar el análisis de funciones para estudiantes y profesionales, sin importar su nivel de
+                experiencia en matemáticas, y ofrecer una solución accesible y eficiente.
+            </p>
+        </section>
+
+        <!-- Justificación -->
+        <section id="justificacion" class="section animate">
+            <h2>Justificación</h2>
+            <p>
+                Este proyecto busca desarrollar una aplicación offline que permite capturar ecuaciones matemáticas con
+                la
+                cámara y visualizar sus gráficas, respondiendo a la necesidad de mejorar la enseñanza de las matemáticas
+                en las aulas. La herramienta, basada en Python, facilitará la comprensión de funciones y el análisis
+                matemático tanto para estudiantes como para profesionales, permitiendo una toma de decisiones más
+                informada y un aprendizaje más efectivo. Al simplificar el acceso y uso de herramientas de graficación,
+                buscamos fortalecer las competencias matemáticas fundamentales y ofrecer una solución adaptable y
+                escalable a diferentes entornos educativos y profesionales. La visualización de datos, como se ha
+                demostrado en diversos sectores, mejora la toma de decisiones, la colaboración y la eficiencia, lo que
+                justifica aún más la importancia de esta herramienta.
+            </p>
+            <h2>Beneficios que aporta la Visualización de Datos</h2>
+            <canvas id="benefitsChart" class="responsive-chart"></canvas>
+        </section>
+
+        <!-- Objetivos -->
+        <section id="objetivos" class="section alt animate">
+            <h2>Objetivos</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Objetivo General</h3>
+                    <p>Desarrollar una herramienta para graficar funciones matemáticas que permita capturar ecuaciones
+                        escritas a mano mediante una cámara y visualizar sus gráficas de forma precisa.</p>
+                </div>
+                <div class="card">
+                    <h3>Objetivos Específicos</h3>
+                    <ul>
+                        <li>Analizar herramientas tecnológicas y trabajos de grado publicados en la web sobre el
+                            desarrollo de graficadores de funciones en Python.</li>
+                        <li>Configurar los sistemas que hacen parte del desarrollo del graficador de funciones,
+                            integrando las librerías necesarias y asegurando su correcto funcionamiento dentro del
+                            entorno de programación con el uso de buenas prácticas.</li>
+                        <li>Evaluar la eficiencia de la ejecución del programa mediante pruebas de rendimiento,
+                            precisión en la representación gráfica, pruebas de errores y retroalimentación de usuarios,
+                            con el objetivo de asegurar su funcionalidad y mejorar su desempeño.</li>
+                        <li> Diseñar un prototipo web utilizando tecnologías front-end y back-end, que permita evaluar
+                            la usabilidad y la interacción con los usuarios </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="antecedentes" class="section animate">
+            <h2>Antecedentes</h2>
+            <p> Para respaldar esta investigación, revisamos 10 estudios (6 internacionales y 4 nacionales) que exploran
+                el uso de software educativo para mejorar la comprensión de funciones algebraicas. Estos estudios, que
+                abarcan trabajos de pregrado y posgrado, incluyen desarrollos de software y propuestas didácticas que
+                utilizan herramientas como GeoGebra <li>Uso de software educativo en el graficado de funciones</li>
+                <li>herramientas interactivas para mejorar la comprensión conceptual</li>
+            </p>
+        </section>
+
+        <section id="conclusion" class="section alt animate">
+            <h2>Conclusión</h2>
+            <p>
+                En resumen, la investigación y la revisión de antecedentes demuestran un creciente interés en el uso de
+                herramientas tecnológicas para mejorar la enseñanza de funciones matemáticas. Estudios previos han
+                explorado tanto el desarrollo de software educativo como la implementación de estrategias didácticas
+                innovadoras. Esto respalda la importancia de crear herramientas accesibles como la nuestra: un
+                graficador de funciones que busca facilitar la visualización y contribuir a la innovación en el aula
+            </p>
+            <img src="{{ url_for('static', filename='img/diagrama.png') }}" alt="Diagrama de caso de uso"
+                class="responsive-img">
+        </section>
+
+        <!-- Demo -->
+        <section id="demo" class="section animate">
+            <h2>Demo</h2>
+            <div id="graficadora-container">
+                <div class="graficadora-content">
+                    <p class="lead">
+                        Ingresa funciones en <code>x</code> (ej.: <code>sin(x)</code>, <code>x^2+2*x+1</code>).
+                    </p>
+                    <div class="controls">
+                        <button id="addBtn" class="btn">+ Añadir función</button>
+                        <button id="removeBtn" class="btn secondary">- Eliminar función</button>
+                        <button id="plotBtn" class="btn warn">Graficar</button>
+                        <button id="clearBtn" class="btn danger">Limpiar</button>
+                    </div>
+                    <div class="func-list" id="funcList"></div>
+                    <div id="plot"></div>
+                    <div class="footer-demo">
+                        <div class="note">Funciones permitidas: <code>sin, cos, tan, exp, log, sqrt, abs, pi, e</code>
+                        </div>
+                        <div class="legend-sample">Ejemplos: <em>sin(x)</em>, <em>x^3 - 2*x</em></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="section alt animate">
+            <h2>Contacto</h2>
+            <form id="formContacto" class="contact-form">
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <textarea name="mensaje" placeholder="Mensaje..." required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Aplicación Offline para Graficar Ecuaciones</p>
+        <p>Andrés Julián Granja Andrade</p>
+        <p>Iván David Miranda Castro</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@11.11.0/lib/browser/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
