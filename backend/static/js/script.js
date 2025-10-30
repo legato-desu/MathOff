@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-      MENÚ HAMBURGUESA
-  =============================== */
+  /* MENÚ HAMBURGUESA */
   const menuToggle = document.getElementById("menu-toggle");
   const navMenu = document.getElementById("nav-menu");
 
@@ -16,9 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===============================
-      ANIMACIONES AL HACER SCROLL
-  =============================== */
+  /* ANIMACIONES AL HACER SCROLL */
   const animatedElements = document.querySelectorAll(".animate");
 
   function showOnScroll() {
@@ -32,9 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", showOnScroll);
   showOnScroll();
 
-  /* ===============================
-      GRÁFICO DE BENEFICIOS (Chart.js)
-  =============================== */
+  /* GRÁFICO DE BENEFICIOS (Chart.js)  */
   const chartCanvas = document.getElementById("benefitsChart");
   if (chartCanvas) {
     const ctx = chartCanvas.getContext("2d");
@@ -83,9 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===============================
-      MODALES (login, registro, contacto)
-  =============================== */
+  /* MODALES (login, registro, contacto) */
   function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = "block";
@@ -119,9 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ===============================
-      FUNCIÓN GENERAL PARA ENVIAR DATOS AL BACKEND
-  =============================== */
+  /* FUNCIÓN GENERAL PARA ENVIAR DATOS AL BACKEND */
   async function enviarDatos(url, datos) {
     try {
       const res = await fetch(`http://127.0.0.1:5000${url}`, {
@@ -166,9 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await enviarDatos("/api/contacto", datos);
   });
 
-  /* ===============================
-      GRAFICADOR DE FUNCIONES
-   =============================== */
+  /* GRAFICADOR DE FUNCIONES */
   const funcList = document.getElementById("funcList");
   const addBtn = document.getElementById("addBtn");
   const removeBtn = document.getElementById("removeBtn");
@@ -210,11 +198,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function cleanExpression(expr) {
       return expr
-        .replace(/[^\w\d+\-*/^()., eπsincoastgqrtlnlog]/gi, "") // limpia caracteres extraños
-        .replace(/(\d)([a-zA-Z])/g, "$1*$2") // 2x → 2*x
-        .replace(/([a-zA-Z])(\d)/g, "$1*$2") // x2 → x*2
-        .replace(/\bsen\b/gi, "sin") // sen → sin
-        .replace(/([a-zA-Z0-9.]+)\s*\^\s*([a-zA-Z0-9.]+)/g, "pow($1,$2)"); // x^2 → pow(x,2)
+        .replace(/[^\w\d+\-*/^()., eπsincoastgqrtlnlog]/gi, "") 
+        .replace(/(\d)([a-zA-Z])/g, "$1*$2") 
+        .replace(/([a-zA-Z])(\d)/g, "$1*$2") 
+        .replace(/\bsen\b/gi, "sin") 
+        .replace(/([a-zA-Z0-9.]+)\s*\^\s*([a-zA-Z0-9.]+)/g, "pow($1,$2)"); 
     }
 
     function evaluateExpression(expr, xValues) {
@@ -268,13 +256,13 @@ document.addEventListener("DOMContentLoaded", () => {
           title: "x",
           zeroline: true,
           showgrid: true,
-          range: [-10, 10] // Limita eje X
+          range: [-10, 10] 
         },
         yaxis: {
           title: "y",
           zeroline: true,
           showgrid: true,
-          range: [-10, 10] // Limita eje Y
+          range: [-10, 10] 
         },
         legend: { orientation: "h", x: 0.02, y: -0.15 },
         margin: { t: 40, b: 60, l: 60, r: 20 }
@@ -289,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addFunctionRow("sin(x)");
     addFunctionRow("x^2");
   }
-}); // fin del DOMContentLoaded
+}); 
 
 
 function openModal(id) {

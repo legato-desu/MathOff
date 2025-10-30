@@ -6,7 +6,6 @@ import os
 app = Flask(__name__, static_folder="static", template_folder="templates")
 CORS(app)
 
-# --- Configuración MySQL desde variables de entorno ---
 db_config = {
     "host": os.getenv("MYSQL_HOST", "localhost"),
     "user": os.getenv("MYSQL_USER", "root"),
@@ -14,20 +13,17 @@ db_config = {
     "database": os.getenv("MYSQL_DATABASE", "mi_basedatos")
 }
 
-# --- Conexión a MySQL ---
 try:
     db = mysql.connector.connect(**db_config)
     cursor = db.cursor(dictionary=True)
-    print("✅ Conectado correctamente a MySQL")
+    print(" Conectado correctamente a MySQL")
 except Exception as e:
-    print("❌ Error al conectar con MySQL:", e)
+    print(" Error al conectar con MySQL:", e)
 
-# --- Página principal ---
 @app.route('/')
 def home():
     return render_template("index.html")
 
-# --- API: Registro ---
 @app.route('/api/registro', methods=['POST'])
 def registrar_usuario():
     data = request.json
@@ -45,7 +41,6 @@ def registrar_usuario():
     db.commit()
     return jsonify({"message": "Usuario registrado exitosamente"}), 200
 
-# --- API: Login ---
 @app.route('/api/login', methods=['POST'])
 def iniciar_sesion():
     data = request.json
@@ -58,7 +53,6 @@ def iniciar_sesion():
         return jsonify({"message": "Inicio de sesión exitoso"}), 200
     return jsonify({"error": "Credenciales incorrectas"}), 401
 
-# --- API: Contacto ---
 @app.route('/api/contacto', methods=['POST'])
 def contacto():
     data = request.json
